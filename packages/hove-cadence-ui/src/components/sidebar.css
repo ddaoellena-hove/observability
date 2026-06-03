@@ -1,6 +1,6 @@
 /* ── Root ── */
 .sidebar {
-  width: 248px;
+  width: 280px;
   height: 100%;
   min-height: 0;
   display: flex;
@@ -26,10 +26,15 @@
   padding: 20px 0 10px;
 }
 
+.sidebar--collapsed .sidebar__collapse-btn {
+  margin-left: 0;
+}
+
 .sidebar--collapsed .sidebar__section-btn {
   justify-content: center;
   padding: 12px 0;
   width: 100%;
+  gap: 0;
 }
 
 .sidebar--collapsed .sidebar__section-btn--active {
@@ -52,7 +57,6 @@
 .sidebar__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 18px 14px 10px;
   flex-shrink: 0;
 }
@@ -62,6 +66,7 @@
   align-items: center;
   gap: 10px;
   min-width: 0;
+  flex: 1;
 }
 
 .sidebar__product-name {
@@ -76,6 +81,7 @@
 
 .sidebar__collapse-btn {
   flex-shrink: 0;
+  margin-left: auto;
   width: 28px;
   height: 28px;
   background: transparent;
@@ -87,7 +93,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  transition: color 0.15s, background 0.15s, transform 0.25s ease;
+  transition: color 0.15s, background 0.15s;
 }
 .sidebar__collapse-btn:hover {
   color: #ffffff;
@@ -102,6 +108,20 @@
   font-size: 13px;
   font-weight: 400;
   flex-shrink: 0;
+  overflow: hidden;
+  max-height: 80px;
+  opacity: 1;
+  white-space: nowrap;
+  /* Fade in with delay when expanding */
+  transition: opacity 0.2s ease 0.12s, max-height 0.25s ease 0.05s, padding-bottom 0.25s ease;
+}
+
+.sidebar--collapsed .sidebar__client {
+  max-height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+  /* Fade out fast when collapsing */
+  transition: opacity 0.1s ease, max-height 0.25s ease, padding-bottom 0.25s ease;
 }
 
 /* ── Navigation ── */
@@ -188,6 +208,30 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* ── Section text wrapper (label + dot + chevron) ── */
+.sidebar__section-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  opacity: 1;
+  /* Fade in with delay when expanding */
+  transition: opacity 0.2s ease 0.12s, max-width 0.25s ease;
+  max-width: 200px;
+}
+
+.sidebar--collapsed .sidebar__section-text {
+  flex: none;
+  width: 0;
+  max-width: 0;
+  opacity: 0;
+  pointer-events: none;
+  /* Fade out fast when collapsing */
+  transition: opacity 0.1s ease, max-width 0.25s ease;
+}
+
 /* ── Section label ── */
 .sidebar__section-label {
   flex: 1;
@@ -220,10 +264,20 @@
 .sidebar__chevron {
   flex-shrink: 0;
   color: rgba(255, 255, 255, 0.4);
-  transition: color 0.15s, transform 0.2s ease;
+  /* Fade in with delay when expanding */
+  transition: color 0.15s, transform 0.2s ease, opacity 0.2s ease 0.12s;
 }
 .sidebar__section-btn:hover .sidebar__chevron {
   color: rgba(255, 255, 255, 0.8);
+}
+.sidebar--collapsed .sidebar__chevron {
+  flex: none;
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Fade out fast when collapsing */
+  transition: color 0.15s, transform 0.2s ease, opacity 0.1s ease;
 }
 
 /* ── Sub-item list ── */
@@ -315,7 +369,7 @@
   cursor: pointer;
   font-family: "Inter", Helvetica, sans-serif;
   font-size: 10.5px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
@@ -325,4 +379,20 @@
 .sidebar__logout:hover {
   background: rgba(255, 255, 255, 0.07);
   color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar__logout-label {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 200px;
+  opacity: 1;
+  /* Fade in with delay when expanding */
+  transition: opacity 0.2s ease 0.12s, max-width 0.25s ease;
+}
+
+.sidebar--collapsed .sidebar__logout-label {
+  opacity: 0;
+  max-width: 0;
+  /* Fade out fast when collapsing */
+  transition: opacity 0.1s ease, max-width 0.25s ease;
 }

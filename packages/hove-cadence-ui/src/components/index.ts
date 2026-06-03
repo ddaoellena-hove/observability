@@ -1,4 +1,6 @@
 export * from './AlertToast';
+export * from './Breadcrumbs';
+export * from './Dropdown';
 export * from './Checkbox';
 export * from './DataVisualization';
 export * from './DatePicker';
