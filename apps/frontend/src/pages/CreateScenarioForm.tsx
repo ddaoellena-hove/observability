@@ -7,6 +7,7 @@ import {
   NavigationDropdown,
   Dropdown,
   SegmentedControl,
+  Link,
 } from "hove-cadence-ui";
 import Map from "../components/Map";
 import FileLibraryDrawer from "../components/FileLibraryDrawer";
@@ -90,6 +91,26 @@ export default function CreateScenarioForm({ onBack }: Props) {
       {/* ── Left panel ── */}
       <div className="csf-panel">
         <div className="csf-scroll">
+        <div className="csf-form-header">
+          <div className="csf-form-header__text">
+            <h2 className="csf-form-header__title">Créer un scénario de mobilité</h2>
+            <p className="csf-form-header__subtitle">
+              Renseignez les paramètres, dessinez la zone et ajoutez le fichier OD.
+            </p>
+          </div>
+          <Link
+            variant="secondary"
+            onClick={onBack}
+            icon={
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M10 13L5 8l5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            }
+            style={{ whiteSpace: "nowrap" }}
+          >
+            Retour au board
+          </Link>
+        </div>
         <div className="csf-sections">
           {/* ── Section 1 ── */}
           <section className="csf-section">
@@ -125,6 +146,7 @@ export default function CreateScenarioForm({ onBack }: Props) {
               state="enabled"
               withIcon="no"
               outline
+              destructive
             />
           </section>
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Sidebar, type SidebarNavSection } from "hove-cadence-ui";
 import ScenariosMobilite from "./pages/ScenariosMobilite";
+import AppHeader from "./components/AppHeader";
 
 // ── Icônes exactes de la story Insights ──────────────────────────────────────
 
@@ -107,14 +108,17 @@ export default function App() {
         onItemClick={setActiveId}
         onLogout={() => alert("Déconnexion")}
       />
-      <main className="app-main">
-        {activeId === "multi-scenario" && <ScenariosMobilite />}
-        {activeId !== "multi-scenario" && (
-          <p style={{ color: "#888", marginTop: 40, textAlign: "center" }}>
-            Page à venir
-          </p>
-        )}
-      </main>
+      <div className="app-content">
+        <AppHeader />
+        <main className="app-main">
+          {activeId === "multi-scenario" && <ScenariosMobilite />}
+          {activeId !== "multi-scenario" && (
+            <p style={{ color: "#888", marginTop: 40, textAlign: "center" }}>
+              Page à venir
+            </p>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

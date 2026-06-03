@@ -94,6 +94,34 @@
   overflow-y: auto;
 }
 
+/* ── Form header (inside scroll) ── */
+.csf-form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.csf-form-header__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.csf-form-header__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.csf-form-header__subtitle {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+}
+
 .csf-sections {
   display: flex;
   flex-direction: column;

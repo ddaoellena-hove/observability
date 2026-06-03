@@ -1,0 +1,85 @@
+.link {
+  font-family: "Inter", Helvetica, sans-serif;
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.link:hover {
+  text-decoration-color: transparent;
+}
+
+.link__arrow {
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+
+.link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.link--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sizes */
+.link--sm {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.link--md {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.link--lg {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Variants */
+.link--primary {
+  color: #69797d;
+}
+
+.link--primary:hover {
+  color: #002830;
+}
+
+.link--secondary {
+  color: #6b7280;
+}
+
+.link--secondary:hover {
+  color: #374151;
+}
+
+.link--destructive {
+  color: #dc2626;
+}
+
+.link--destructive:hover {
+  color: #b91c1c;
+}
+
+.link--inverse {
+  color: #ffffff;
+}
+
+.link--inverse:hover {
+  color: #e5e7eb;
+}
