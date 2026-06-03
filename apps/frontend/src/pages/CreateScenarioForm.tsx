@@ -289,10 +289,11 @@ export default function CreateScenarioForm({ onBack }: Props) {
                 </svg>
                 <p className="csf-info-text">
                   Le fichier doit contenir les colonnes obligatoires :{" "}
-                  <span className="csf-tag">LATITUDE</span>{" "}
-                  <span className="csf-tag">LONGITUDE</span>{" "}
-                  et optionnellement{" "}
-                  <span className="csf-tag csf-tag--muted">NAMES</span>
+                  <span className="csf-tag">ID_ORIGINE</span>
+                  <br />
+                  <span className="csf-tag">ID_DESTINATION</span>{" "}
+                  <span className="csf-tag">VOLUME</span>{" "}
+                  et optionnellement les coordonnées GPS .
                 </p>
               </div>
             </div>
