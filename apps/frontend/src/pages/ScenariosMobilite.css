@@ -1,0 +1,161 @@
+.sm-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Top bar ── */
+.sm-topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sm-topbar__left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sm-breadcrumb {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.sm-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.2;
+}
+
+.sm-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sm-badge {
+  font-size: 12px;
+  color: #555;
+  background: #f0f0f0;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+.sm-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Buttons ── */
+.sm-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sm-btn--primary {
+  background: #1a2e2a;
+  color: #fff;
+}
+
+.sm-btn--primary:hover {
+  background: #243d38;
+}
+
+.sm-btn--danger {
+  background: #fff0f0;
+  color: #c0392b;
+  border: 1px solid #fca5a5;
+}
+
+.sm-btn--danger:hover {
+  background: #ffe4e4;
+}
+
+/* ── Card ── */
+.sm-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.sm-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 16px;
+}
+
+.sm-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+/* ── Tabs ── */
+.sm-tabs {
+  display: flex;
+  gap: 0;
+}
+
+/* ── Toggle label ── */
+.sm-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ── Table ── */
+.sm-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sm-table thead th {
+  padding: 12px 24px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: #aaa;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sm-table tbody td {
+  padding: 12px 24px;
+  font-size: 14px;
+  color: #555;
+}
+
+.sm-table__empty {
+  text-align: left;
+  padding: 20px 24px !important;
+  color: #999;
+  font-size: 14px;
+}

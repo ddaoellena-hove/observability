@@ -1,0 +1,295 @@
+.csf-layout {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+  min-height: calc(100vh - 64px);
+}
+
+/* ── Left panel ── */
+.csf-panel {
+  width: 560px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.csf-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.csf-panel__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.csf-panel__subtitle {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+  max-width: 200px;
+}
+
+.csf-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* ── Sections ── */
+.csf-section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.csf-section__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.csf-section__desc {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+  margin-top: -4px;
+}
+
+/* ── Fields ── */
+.csf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.csf-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.csf-textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #374151;
+  resize: vertical;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.csf-textarea:focus {
+  border-color: #1b6cff;
+}
+
+.csf-select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #374151;
+  font-family: inherit;
+  outline: none;
+  background: #fff;
+  cursor: pointer;
+  appearance: auto;
+  transition: border-color 0.15s;
+}
+
+.csf-select:focus {
+  border-color: #1b6cff;
+}
+
+.csf-row3 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.csf-row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* ── Section title optional ── */
+.csf-optional {
+  font-weight: 400;
+  color: #aaa;
+  font-size: 12px;
+}
+
+/* ── Dropzone ── */
+.csf-dropzone {
+  border: 1.5px dashed #c8d0dc;
+  border-radius: 10px;
+  background: #f4f6fa;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.csf-dropzone--over {
+  border-color: #1b6cff;
+  background: #eef2ff;
+}
+
+.csf-dropzone__icon {
+  margin-bottom: 4px;
+}
+
+.csf-dropzone__text {
+  font-size: 13px;
+  color: #1a1a2e;
+  text-align: center;
+}
+
+.csf-dropzone__or {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.csf-dropzone__btn-wrapper {
+  cursor: pointer;
+}
+
+.csf-dropzone__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #aaa;
+  padding: 0 2px;
+}
+
+.csf-dropzone__status {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: #888;
+  background: #fff;
+}
+
+/* ── Info box ── */
+.csf-info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.csf-info-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.csf-info-text {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.csf-tag {
+  display: inline-block;
+  background: #1a1a2e;
+  color: #fff;
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.csf-tag--muted {
+  background: #6b7280;
+}
+
+/* ── Footer ── */
+.csf-footer {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.csf-footer__section {
+  flex-direction: row !important;
+  gap: 10px;
+}
+
+.csf-footer__section > * {
+  flex: 1;
+  width: 100%;
+}
+
+.csf-status {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ── Right map panel ── */
+.csf-map {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.csf-map__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  gap: 8px;
+}
+
+.csf-map__breadcrumb {
+  font-size: 11px;
+  color: #aaa;
+  letter-spacing: 0.04em;
+}
+
+.csf-map__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.3;
+}
+
+.csf-map__subtitle {
+  font-size: 13px;
+  color: #888;
+}
+
+.csf-map__canvas {
+  flex: 1;
+  min-height: 0;
+  border-radius: 8px;
+  margin-top: 8px;
+  overflow: hidden;
+}
