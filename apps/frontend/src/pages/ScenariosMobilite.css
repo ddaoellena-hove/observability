@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  font-family: "Inter", sans-serif;
+}
+
+.sm-page * {
+  font-family: "Inter", sans-serif;
 }
 
 /* ── Header ── */
@@ -26,9 +31,10 @@
 
 .sm-title {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 500;
   color: #002830;
   line-height: 1.2;
+  font-family: "Uxum Grotesque", sans-serif;
 }
 
 .sm-breadcrumb-row {
@@ -55,8 +61,8 @@
 
 .sm-breadcrumb-row .navigation-dropdown-trigger {
   font-family: "Inter", sans-serif;
-  font-size: 13px;
-  padding: 4px 10px;
+  font-size: 14px;
+  padding: 5px 12px;
 }
 
 .sm-header__right {

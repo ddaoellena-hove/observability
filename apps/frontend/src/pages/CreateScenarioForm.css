@@ -44,8 +44,8 @@
 
 .csf-breadcrumb-row .navigation-dropdown-trigger {
   font-family: "Inter", sans-serif;
-  font-size: 13px;
-  padding: 4px 10px;
+  font-size: 14px;
+  padding: 5px 12px;
 }
 
 .csf-header__title-row {
@@ -56,7 +56,7 @@
 
 .csf-page-title {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 500;
   color: #002830;
   line-height: 1.2;
 }
@@ -64,9 +64,13 @@
 /* ── Layout ── */
 .csf-layout {
   display: flex;
-  gap: 24px;
+  gap: 0;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.10), 0 0 2px 0 rgba(0, 0, 0, 0.25);
 }
 
 /* ── Left panel — Inter font ── */
@@ -77,30 +81,40 @@
   flex-direction: column;
   gap: 0;
   font-family: "Inter", sans-serif;
+  min-height: 0;
 }
 
 .csf-panel * {
   font-family: "Inter", sans-serif;
 }
 
+/* Scrollable wrapper around all sections */
+.csf-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
 .csf-sections {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  flex: 1;
+  gap: 0;
 }
 
 /* ── Sections ── */
 .csf-section {
-  background: #fff;
-  border-radius: 10px;
-  padding: 16px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.csf-section:last-child {
+  border-bottom: none;
 }
 
 .csf-section__title {
+  text-transform: uppercase;
   font-size: 13px;
   font-weight: 600;
   color: #1a1a2e;
@@ -274,69 +288,44 @@
   background: #6b7280;
 }
 
-/* ── Footer ── */
-.csf-footer {
-  padding-top: 16px;
+/* ── Footer (inside scroll) ── */
+.csf-footer-section {
   display: flex;
-  flex-direction: column;
   gap: 10px;
+  padding: 20px 24px;
+  border-top: 1px solid #f0f0f0;
 }
 
-.csf-footer__section {
-  flex-direction: row !important;
-  gap: 10px;
-}
-
-.csf-footer__section > * {
+.csf-footer-section > * {
   flex: 1;
-  width: 100%;
 }
 
 .csf-status {
   font-size: 12px;
   color: #888;
+  padding: 0 24px 16px;
 }
 
 /* ── Right map panel ── */
 .csf-map {
   flex: 1;
-  background: #fff;
-  border-radius: 10px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  min-height: 0;
+  border-left: 1px solid #f0f0f0;
 }
 
 .csf-map__inner {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 24px;
-  gap: 8px;
 }
 
-.csf-map__breadcrumb {
-  font-size: 11px;
-  color: #aaa;
-  letter-spacing: 0.04em;
-}
-
-.csf-map__title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #1a1a2e;
-  line-height: 1.3;
-}
-
-.csf-map__subtitle {
-  font-size: 13px;
-  color: #888;
+.csf-map__header {
+  display: none;
 }
 
 .csf-map__canvas {
   flex: 1;
   min-height: 0;
-  border-radius: 8px;
-  margin-top: 8px;
   overflow: hidden;
 }

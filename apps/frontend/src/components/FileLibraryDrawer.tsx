@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PrimaryButton, SecondaryButton, TextInput } from "hove-cadence-ui";
 import "./FileLibraryDrawer.css";
 
@@ -36,6 +36,16 @@ export default function FileLibraryDrawer({ onClose, onSelect }: Props) {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<number | null>(null);
   const [page, setPage] = useState(1);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    requestAnimationFrame(() => setVisible(true));
+  }, []);
+
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(onClose, 300);
+  };
 
   const filtered = ALL_FILES.filter((f) =>
     f.name.toLowerCase().includes(search.toLowerCase())
@@ -51,16 +61,16 @@ export default function FileLibraryDrawer({ onClose, onSelect }: Props) {
   const handleValidate = () => {
     const file = ALL_FILES.find((f) => f.id === selected);
     if (file) onSelect(file);
-    onClose();
+    handleClose();
   };
 
   return (
-    <div className="fld-overlay" onClick={onClose}>
-      <div className="fld-drawer" onClick={(e) => e.stopPropagation()}>
+    <div className={`fld-overlay${visible ? " fld-overlay--visible" : ""}`} onClick={handleClose}>
+      <div className={`fld-drawer${visible ? " fld-drawer--visible" : ""}`} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="fld-header">
           <h2 className="fld-title">Sélectionner un fichier</h2>
-          <button className="fld-close" onClick={onClose} aria-label="Fermer">
+          <button className="fld-close" onClick={handleClose} aria-label="Fermer">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>

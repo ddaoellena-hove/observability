@@ -89,6 +89,7 @@ export default function CreateScenarioForm({ onBack }: Props) {
       <div className="csf-layout">
       {/* ── Left panel ── */}
       <div className="csf-panel">
+        <div className="csf-scroll">
         <div className="csf-sections">
           {/* ── Section 1 ── */}
           <section className="csf-section">
@@ -323,10 +324,7 @@ export default function CreateScenarioForm({ onBack }: Props) {
               />
             </div>
           </section>
-        </div>
-
-        <div className="csf-footer">
-          <section className="csf-section csf-footer__section">
+          <div className="csf-footer-section">
             <PrimaryButton
               label="Réinitialiser"
               state="enabled"
@@ -339,8 +337,9 @@ export default function CreateScenarioForm({ onBack }: Props) {
               state="enabled"
               withIcon="no"
             />
-          </section>
+          </div>
           <p className="csf-status">{status}</p>
+        </div>
         </div>
       </div>
 
