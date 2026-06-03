@@ -17,7 +17,7 @@
 .csf-page-header__left {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
 }
 
 .csf-breadcrumb-row {
@@ -44,8 +44,8 @@
 
 .csf-breadcrumb-row .navigation-dropdown-trigger {
   font-family: "Inter", sans-serif;
-  font-size: 14px;
-  padding: 5px 12px;
+  font-size: 12px;
+  padding: 5px 10px;
 }
 
 .csf-header__title-row {
