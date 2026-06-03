@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mcp-hove-test": {
+      "url": "http://localhost:6006/mcp",
+      "type": "http"
+    }
+  }
+}
