@@ -31,8 +31,24 @@
   line-height: 1.2;
 }
 
-.sm-section-dropdown {
-  margin-left: 4px;
+.sm-breadcrumb-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sm-breadcrumb-item {
+  font-size: 12px;
+  color: #888;
+}
+
+.sm-breadcrumb-item--current {
+  color: #555;
+}
+
+.sm-breadcrumb-sep {
+  font-size: 12px;
+  color: #ccc;
 }
 
 .sm-header__right {
