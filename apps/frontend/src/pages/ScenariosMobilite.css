@@ -25,9 +25,9 @@
 }
 
 .sm-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
-  color: #1a1a2e;
+  color: #002830;
   line-height: 1.2;
 }
 
@@ -35,11 +35,13 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  font-family: "Inter", sans-serif;
 }
 
 .sm-breadcrumb-item {
   font-size: 12px;
   color: #888;
+  font-family: "Inter", sans-serif;
 }
 
 .sm-breadcrumb-item--current {
@@ -49,6 +51,12 @@
 .sm-breadcrumb-sep {
   font-size: 12px;
   color: #ccc;
+}
+
+.sm-breadcrumb-row .navigation-dropdown-trigger {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  padding: 4px 10px;
 }
 
 .sm-header__right {
@@ -134,7 +142,7 @@
 /* ── Tabs ── */
 .sm-tabs {
   display: flex;
-  gap: 0;
+  gap: 16px;
 }
 
 /* ── Toggle label ── */

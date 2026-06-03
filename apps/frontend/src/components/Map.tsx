@@ -28,8 +28,8 @@ export default function Map({ className }: Props) {
       zoomControl: true,
     });
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+      attribution: "Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics",
       maxZoom: 19,
     }).addTo(map);
 

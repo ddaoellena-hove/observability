@@ -1,39 +1,86 @@
+/* ── Wrapper ── */
+.csf-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+}
+
+/* ── Page header (same as ScenariosMobilite) ── */
+.csf-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.csf-page-header__left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.csf-breadcrumb-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "Inter", sans-serif;
+}
+
+.csf-breadcrumb-item {
+  font-size: 12px;
+  color: #888;
+  font-family: "Inter", sans-serif;
+}
+
+.csf-breadcrumb-item--current {
+  color: #555;
+}
+
+.csf-breadcrumb-sep {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.csf-breadcrumb-row .navigation-dropdown-trigger {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  padding: 4px 10px;
+}
+
+.csf-header__title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.csf-page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #002830;
+  line-height: 1.2;
+}
+
+/* ── Layout ── */
 .csf-layout {
   display: flex;
   gap: 24px;
-  height: 100%;
-  min-height: calc(100vh - 64px);
+  flex: 1;
+  min-height: 0;
 }
 
-/* ── Left panel ── */
+/* ── Left panel — Inter font ── */
 .csf-panel {
   width: 560px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 0;
+  font-family: "Inter", sans-serif;
 }
 
-.csf-panel__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.csf-panel__title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a2e;
-  margin-bottom: 4px;
-}
-
-.csf-panel__subtitle {
-  font-size: 12px;
-  color: #888;
-  line-height: 1.5;
-  max-width: 200px;
+.csf-panel * {
+  font-family: "Inter", sans-serif;
 }
 
 .csf-sections {
