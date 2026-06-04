@@ -7,6 +7,7 @@ import {
   NavigationDropdown,
   Dropdown,
   SegmentedControl,
+  CounterInput,
   Link,
 } from "hove-cadence-ui";
 import Map from "../components/Map";
@@ -38,9 +39,9 @@ export default function CreateScenarioForm({ onBack }: Props) {
   const [dateSimulation, setDateSimulation] = useState<Date | null>(null);
   const [exclureObjet, setExclureObjet] = useState("stop_area:IDFM:482835");
   const [forcerObjet, setForcerObjet] = useState("stop_area:IDFM:482835");
-  const [dureeMax, setDureeMax] = useState("1800");
-  const [nbMin, setNbMin] = useState("1");
-  const [nbMax, setNbMax] = useState("99999");
+  const [dureeMax, setDureeMax] = useState(1800);
+  const [nbMin, setNbMin] = useState(1);
+  const [nbMax, setNbMax] = useState(99999);
   const [scenarioApplique, setScenarioApplique] = useState("Départ");
   const [dateDebut, setDateDebut] = useState<Date | null>(null);
   const [dateFin, setDateFin] = useState<Date | null>(null);
@@ -173,28 +174,16 @@ export default function CreateScenarioForm({ onBack }: Props) {
             </div>
             <div className="csf-row3">
               <div className="csf-field">
-                <TextInput
-                  label="Durée maximale marche à pied en rabattement (s)"
-                  value={dureeMax}
-                  onChange={(e) => setDureeMax(e.target.value)}
-                  type="number"
-                />
+                <label className="csf-label">Durée maximale marche à pied en rabattement</label>
+                <CounterInput value={dureeMax} onChange={setDureeMax} unit="s" min={0} step={60} />
               </div>
               <div className="csf-field">
-                <TextInput
-                  label="Nombre minimal de propositions d'itinéraire"
-                  value={nbMin}
-                  onChange={(e) => setNbMin(e.target.value)}
-                  type="number"
-                />
+                <label className="csf-label">Nombre minimal de propositions d'itinéraire</label>
+                <CounterInput value={nbMin} onChange={setNbMin} min={1} max={nbMax} />
               </div>
               <div className="csf-field">
-                <TextInput
-                  label="Nombre maximal de propositions d'itinéraire"
-                  value={nbMax}
-                  onChange={(e) => setNbMax(e.target.value)}
-                  type="number"
-                />
+                <label className="csf-label">Nombre maximal de propositions d'itinéraire</label>
+                <CounterInput value={nbMax} onChange={setNbMax} min={nbMin} />
               </div>
             </div>
             <div className="csf-field">
