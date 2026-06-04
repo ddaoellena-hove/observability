@@ -9,18 +9,66 @@
   font-family: "Inter", sans-serif;
 }
 
-/* ── Sub-header ── */
-.sd-subheader {
+/* ── Page header ── */
+.sd-page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
 }
 
-.sd-subheader__left {
+.sd-page-header__left {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.sd-breadcrumb-row {
+  display: flex;
+  align-items: center;
   gap: 4px;
+  font-family: "Inter", sans-serif;
+}
+
+.sd-breadcrumb-item {
+  font-size: 12px;
+  color: #888;
+}
+
+.sd-breadcrumb-item--current {
+  color: #555;
+}
+
+.sd-breadcrumb-sep {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.sd-breadcrumb-row .navigation-dropdown-trigger {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  padding: 5px 10px;
+}
+
+.sd-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sd-page-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: #002830;
+  line-height: 1.2;
+  font-family: "Uxum Grotesque", sans-serif;
+}
+
+/* ── Sub-header ── */
+.sd-subheader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .sd-scenario-name {
