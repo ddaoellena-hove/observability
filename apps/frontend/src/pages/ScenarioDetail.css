@@ -68,7 +68,14 @@
 .sd-subheader {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
+}
+
+.sd-subheader__left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .sd-scenario-name {
