@@ -177,18 +177,16 @@ export default function CreateScenarioForm({ onBack }: Props) {
               <CounterInput label="Nombre minimal de propositions d'itinéraire" value={nbMin} onChange={setNbMin} min={1} max={nbMax} />
               <CounterInput label="Nombre maximal de propositions d'itinéraire" value={nbMax} onChange={setNbMax} min={nbMin} />
             </div>
-            <div className="csf-field">
-              <label className="csf-label">Scénario appliqué à</label>
-              <Dropdown
-                options={[
-                  { id: "depart", label: "Départ" },
-                  { id: "arrivee", label: "Arrivée" },
-                  { id: "depart-arrivee", label: "Départ et arrivée" },
-                ]}
-                value={scenarioApplique}
-                onChange={setScenarioApplique}
-              />
-            </div>
+            <Dropdown
+              label="Scénario appliqué à"
+              options={[
+                { id: "depart", label: "Départ" },
+                { id: "arrivee", label: "Arrivée" },
+                { id: "depart-arrivee", label: "Départ et arrivée" },
+              ]}
+              value={scenarioApplique}
+              onChange={setScenarioApplique}
+            />
           </section>
 
           {/* ── Section 4 ── */}
