@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useCallback } from "react";
 import "./data-visualization.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -25,19 +25,32 @@ export interface DataVisualizationProps {
   showGridLines?: boolean;
   /** Show value labels on bars. Default false */
   showValues?: boolean;
+  /** Show tooltip on bar hover. Default true */
+  showTooltip?: boolean;
   style?: React.CSSProperties;
   className?: string;
+}
+
+// ─── Tooltip state ────────────────────────────────────────────────────────────
+
+interface TooltipState {
+  x: number;
+  y: number;
+  category: string;
+  entries: { label: string; value: number; color: string }[];
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const SERIES_COLORS = [
-  "var(--CAI-dv-series-1)",
-  "var(--CAI-dv-series-2)",
-  "var(--CAI-dv-series-3)",
-  "var(--CAI-dv-series-4)",
-  "var(--CAI-dv-series-5)",
-  "var(--CAI-dv-series-6)",
+  "var(--CAI-dv-series-1)", /* #6B3FD6 Violet */
+  "var(--CAI-dv-series-2)", /* #1A91E8 Bleu */
+  "var(--CAI-dv-series-3)", /* #007D79 Teal */
+  "var(--CAI-dv-series-4)", /* #F1A21B Ambre */
+  "var(--CAI-dv-series-5)", /* #A0185E Magenta */
+  "var(--CAI-dv-series-6)", /* #F04E4E Corail */
+  "var(--CAI-dv-series-7)", /* #5A2D82 Violet foncé */
+  "var(--CAI-dv-series-8)", /* #55606E Ardoise */
 ];
 
 const MARGIN = { top: 16, right: 16, bottom: 36, left: 44 };
@@ -201,6 +214,35 @@ function Legend({ series }: LegendProps) {
   );
 }
 
+// ─── Chart Tooltip ───────────────────────────────────────────────────────────
+
+function ChartTooltip({ tooltip }: { tooltip: TooltipState }) {
+  const total = tooltip.entries.reduce((sum, e) => sum + e.value, 0);
+
+  return (
+    <div
+      className="dv__tooltip"
+      style={{ left: tooltip.x, top: tooltip.y }}
+      role="tooltip"
+    >
+      {/* Ligne catégorie : label à gauche, total à droite */}
+      <div className="dv__tooltip-category">
+        <span className="dv__tooltip-category-label">{tooltip.category}</span>
+        <span className="dv__tooltip-category-value">{total}</span>
+      </div>
+
+      {/* Lignes séries : carré couleur à gauche, valeur à droite */}
+      {tooltip.entries.map((e) => (
+        <div key={e.label} className="dv__tooltip-row">
+          <span className="dv__tooltip-dot" style={{ background: e.color }} />
+          <span className="dv__tooltip-label">{e.label}</span>
+          <span className="dv__tooltip-value">{e.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ─── Stacked Vertical ─────────────────────────────────────────────────────────
 
 function StackedVertical({
@@ -212,6 +254,8 @@ function StackedVertical({
   marginTop,
   maxVal,
   showValues,
+  onBarEnter,
+  onBarLeave,
 }: {
   series: DataVisualizationSeries[];
   categories: string[];
@@ -221,6 +265,8 @@ function StackedVertical({
   marginTop: number;
   maxVal: number;
   showValues: boolean;
+  onBarEnter: (e: React.MouseEvent, ci: number) => void;
+  onBarLeave: () => void;
 }) {
   const catCount = categories.length;
   const colW = innerW / catCount;
@@ -254,7 +300,13 @@ function StackedVertical({
 
               return (
                 <g key={si}>
-                  <path d={d} fill={color} className="dv__bar" />
+                  <path
+                    d={d}
+                    fill={color}
+                    className="dv__bar"
+                    onMouseEnter={(e) => onBarEnter(e, ci)}
+                    onMouseLeave={onBarLeave}
+                  />
                   {showValues && barH > 14 && (
                     <text
                       x={x + barW / 2}
@@ -287,6 +339,8 @@ function GroupedVertical({
   marginTop,
   maxVal,
   showValues,
+  onBarEnter,
+  onBarLeave,
 }: {
   series: DataVisualizationSeries[];
   categories: string[];
@@ -296,6 +350,8 @@ function GroupedVertical({
   marginTop: number;
   maxVal: number;
   showValues: boolean;
+  onBarEnter: (e: React.MouseEvent, ci: number) => void;
+  onBarLeave: () => void;
 }) {
   const catCount = categories.length;
   const seriesCount = series.length;
@@ -329,7 +385,13 @@ function GroupedVertical({
 
             return (
               <g key={si}>
-                <path d={d} fill={color} className="dv__bar" />
+                <path
+                  d={d}
+                  fill={color}
+                  className="dv__bar"
+                  onMouseEnter={(e) => onBarEnter(e, ci)}
+                  onMouseLeave={onBarLeave}
+                />
                 {showValues && barH > 16 && (
                   <text
                     x={x + barW / 2}
@@ -359,6 +421,8 @@ function HorizontalChart({
   svgH,
   showGridLines,
   showValues,
+  onBarEnter,
+  onBarLeave,
 }: {
   series: DataVisualizationSeries[];
   categories: string[];
@@ -366,6 +430,8 @@ function HorizontalChart({
   svgH: number;
   showGridLines: boolean;
   showValues: boolean;
+  onBarEnter: (e: React.MouseEvent, ci: number) => void;
+  onBarLeave: () => void;
 }) {
   // For horizontal: categories on Y axis, values on X axis
   // Use a wider left margin to fit category labels
@@ -483,7 +549,13 @@ function HorizontalChart({
 
             return (
               <g key={si}>
-                <path d={d} fill={color} className="dv__bar" />
+                <path
+                  d={d}
+                  fill={color}
+                  className="dv__bar"
+                  onMouseEnter={(e) => onBarEnter(e, ci)}
+                  onMouseLeave={onBarLeave}
+                />
                 {showValues && bW > 24 && (
                   <text
                     x={x + bW - 6}
@@ -514,9 +586,35 @@ export function DataVisualization({
   showLegend = true,
   showGridLines = true,
   showValues = false,
+  showTooltip = true,
   style,
   className = "",
 }: DataVisualizationProps) {
+  const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleBarEnter = useCallback(
+    (e: React.MouseEvent, categoryIdx: number) => {
+      if (!showTooltip) return;
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const x = e.clientX - rect.left + 12;
+      const y = e.clientY - rect.top - 8;
+      setTooltip({
+        x,
+        y,
+        category: categories[categoryIdx],
+        entries: series.map((s, i) => ({
+          label: s.label,
+          value: s.data[categoryIdx] ?? 0,
+          color: seriesColor(s, i),
+        })),
+      });
+    },
+    [showTooltip, categories, series]
+  );
+
+  const handleBarLeave = useCallback(() => setTooltip(null), []);
   // Derived geometry for vertical charts
   const svgW = 480;
   const svgH = height;
@@ -536,7 +634,7 @@ export function DataVisualization({
 
   if (type === "horizontal") {
     return (
-      <div className={`dv ${className}`} style={style}>
+      <div ref={containerRef} className={`dv ${className}`} style={{ ...style, position: "relative" }}>
         <HorizontalChart
           series={series}
           categories={categories}
@@ -544,14 +642,17 @@ export function DataVisualization({
           svgH={svgH}
           showGridLines={showGridLines}
           showValues={showValues}
+          onBarEnter={handleBarEnter}
+          onBarLeave={handleBarLeave}
         />
         {showLegend && <Legend series={series} />}
+        {tooltip && <ChartTooltip tooltip={tooltip} />}
       </div>
     );
   }
 
   return (
-    <div className={`dv ${className}`} style={style}>
+    <div ref={containerRef} className={`dv ${className}`} style={{ ...style, position: "relative" }}>
       <svg
         width="100%"
         height={svgH}
@@ -599,6 +700,8 @@ export function DataVisualization({
             marginTop={MARGIN.top}
             maxVal={maxVal}
             showValues={showValues}
+            onBarEnter={handleBarEnter}
+            onBarLeave={handleBarLeave}
           />
         )}
         {type === "grouped-vertical" && (
@@ -611,11 +714,14 @@ export function DataVisualization({
             marginTop={MARGIN.top}
             maxVal={maxVal}
             showValues={showValues}
+            onBarEnter={handleBarEnter}
+            onBarLeave={handleBarLeave}
           />
         )}
       </svg>
 
       {showLegend && <Legend series={series} />}
+      {tooltip && <ChartTooltip tooltip={tooltip} />}
     </div>
   );
 }

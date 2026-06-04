@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Tab, Toggle, PrimaryButton, NavigationDropdown, SegmentedControl } from "hove-cadence-ui";
 import CreateScenarioForm from "./CreateScenarioForm";
+import ScenarioDetail from "./ScenarioDetail";
 import "./ScenariosMobilite.css";
 
 type TabId = "en-cours" | "a-venir" | "passees" | "brouillon";
@@ -33,12 +34,12 @@ export default function ScenariosMobilite() {
   const [mapView, setMapView] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
   const [activeSection, setActiveSection] = useState("multicritere");
   const [activeView, setActiveView] = useState("scenarios");
 
-  if (showForm) {
-    return <CreateScenarioForm onBack={() => setShowForm(false)} />;
-  }
+  if (showForm) return <CreateScenarioForm onBack={() => setShowForm(false)} />;
+  if (showDetail) return <ScenarioDetail onBack={() => setShowDetail(false)} />;
 
   return (
     <div className="sm-page">
@@ -119,10 +120,12 @@ export default function ScenariosMobilite() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td colSpan={5} className="sm-table__empty">
-                Aucun scénario enregistré pour le moment.
-              </td>
+            <tr className="sm-table__row" onClick={() => setShowDetail(true)} style={{ cursor: "pointer" }}>
+              <td>04/06/2026</td>
+              <td>06/06/2026</td>
+              <td>30/06/2026</td>
+              <td>Scénario de mobilité 1</td>
+              <td>→</td>
             </tr>
           </tbody>
         </table>

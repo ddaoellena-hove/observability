@@ -7,6 +7,16 @@
   background: #ffffff;
   font-family: "Spline Sans Mono", monospace;
   width: 100%;
+
+  /* ── Palette de séries ── */
+  --CAI-dv-series-1: #6B3FD6; /* Violet       — série principale */
+  --CAI-dv-series-2: #1A91E8; /* Bleu         — série 2 */
+  --CAI-dv-series-3: #007D79; /* Teal         — série 3 */
+  --CAI-dv-series-4: #F1A21B; /* Ambre        — série 4 / alertes */
+  --CAI-dv-series-5: #A0185E; /* Magenta      — série 5 */
+  --CAI-dv-series-6: #F04E4E; /* Corail       — incidents critiques */
+  --CAI-dv-series-7: #5A2D82; /* Violet foncé — série 7 */
+  --CAI-dv-series-8: #55606E; /* Ardoise      — neutre / divers */
 }
 
 /* SVG canvas */
@@ -51,6 +61,86 @@
   font-size: 10px;
   font-weight: 600;
   pointer-events: none;
+}
+
+/* ─── Tooltip ────────────────────────────────────────────────────────────── */
+
+.dv__tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  min-width: 160px;
+  transform: translate(0, -100%);
+  overflow: hidden;
+}
+
+/* Category row — label gauche, valeur droite */
+.dv__tooltip-category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.dv__tooltip-category-label {
+  font-family: "Inter", Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.dv__tooltip-category-value {
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+
+/* Series rows */
+.dv__tooltip-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.dv__tooltip-row:last-child {
+  border-bottom: none;
+}
+
+.dv__tooltip-dot {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.dv__tooltip-label {
+  flex: 1;
+  font-family: "Inter", Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6b7280;
+  white-space: nowrap;
+  display: none; /* masqué — le dot suffit à identifier la série */
+}
+
+.dv__tooltip-value {
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a2e;
+  white-space: nowrap;
 }
 
 /* ─── Legend ─────────────────────────────────────────────────────────────── */

@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/appheader.tsx","./src/components/filelibrarydrawer.tsx","./src/components/map.tsx","./src/pages/createscenarioform.tsx","./src/pages/scenariosmobilite.tsx"],"version":"6.0.3"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/appheader.tsx","./src/components/filelibrarydrawer.tsx","./src/components/map.tsx","./src/pages/createscenarioform.tsx","./src/pages/scenariodetail.tsx","./src/pages/scenariosmobilite.tsx"],"version":"6.0.3"}
