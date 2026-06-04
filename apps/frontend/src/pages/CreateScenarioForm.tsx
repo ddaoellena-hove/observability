@@ -173,18 +173,9 @@ export default function CreateScenarioForm({ onBack }: Props) {
               />
             </div>
             <div className="csf-row3">
-              <div className="csf-field">
-                <label className="csf-label">Durée maximale marche à pied en rabattement</label>
-                <CounterInput value={dureeMax} onChange={setDureeMax} unit="s" min={0} step={60} />
-              </div>
-              <div className="csf-field">
-                <label className="csf-label">Nombre minimal de propositions d'itinéraire</label>
-                <CounterInput value={nbMin} onChange={setNbMin} min={1} max={nbMax} />
-              </div>
-              <div className="csf-field">
-                <label className="csf-label">Nombre maximal de propositions d'itinéraire</label>
-                <CounterInput value={nbMax} onChange={setNbMax} min={nbMin} />
-              </div>
+              <CounterInput label="Durée maximale marche à pied en rabattement" value={dureeMax} onChange={setDureeMax} unit="s" min={0} step={60} />
+              <CounterInput label="Nombre minimal de propositions d'itinéraire" value={nbMin} onChange={setNbMin} min={1} max={nbMax} />
+              <CounterInput label="Nombre maximal de propositions d'itinéraire" value={nbMax} onChange={setNbMax} min={nbMin} />
             </div>
             <div className="csf-field">
               <label className="csf-label">Scénario appliqué à</label>
@@ -309,14 +300,8 @@ export default function CreateScenarioForm({ onBack }: Props) {
               />
             </div>
             <div className="csf-row2">
-              <div className="csf-field">
-                <label className="csf-label">Taille échantillon OD</label>
-                <CounterInput value={tailleOD} onChange={setTailleOD} min={1} step={1} />
-              </div>
-              <div className="csf-field">
-                <label className="csf-label">Concurrence requêtes</label>
-                <CounterInput value={concurrence} onChange={setConcurrence} min={1} max={32} step={1} />
-              </div>
+              <CounterInput label="Taille échantillon OD" value={tailleOD} onChange={setTailleOD} min={1} step={1} />
+              <CounterInput label="Concurrence requêtes" value={concurrence} onChange={setConcurrence} min={1} max={32} step={1} />
             </div>
             <div className="csf-field">
               <label className="csf-label">Paramètres avancés (JSON, optionnel)</label>
