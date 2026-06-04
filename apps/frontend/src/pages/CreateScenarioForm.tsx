@@ -50,8 +50,8 @@ export default function CreateScenarioForm({ onBack }: Props) {
   const [showLibrary, setShowLibrary] = useState(false);
   const [urlNavitia, setUrlNavitia] = useState("https://api.navitia.io/v1/coverage/fr-idf");
   const [token, setToken] = useState("");
-  const [tailleOD, setTailleOD] = useState("120");
-  const [concurrence, setConcurrence] = useState("6");
+  const [tailleOD, setTailleOD] = useState(120);
+  const [concurrence, setConcurrence] = useState(6);
   const [paramsAvances, setParamsAvances] = useState(`{"wheelchair": true, "first_section_mode[]": ["walking"]}`);
   const [status, setStatus] = useState("Prêt.");
   const [activeSection, setActiveSection] = useState("multicritere");
@@ -310,20 +310,12 @@ export default function CreateScenarioForm({ onBack }: Props) {
             </div>
             <div className="csf-row2">
               <div className="csf-field">
-                <TextInput
-                  label="Taille échantillon OD"
-                  value={tailleOD}
-                  onChange={(e) => setTailleOD(e.target.value)}
-                  type="number"
-                />
+                <label className="csf-label">Taille échantillon OD</label>
+                <CounterInput value={tailleOD} onChange={setTailleOD} min={1} step={1} />
               </div>
               <div className="csf-field">
-                <TextInput
-                  label="Concurrence requêtes"
-                  value={concurrence}
-                  onChange={(e) => setConcurrence(e.target.value)}
-                  type="number"
-                />
+                <label className="csf-label">Concurrence requêtes</label>
+                <CounterInput value={concurrence} onChange={setConcurrence} min={1} max={32} step={1} />
               </div>
             </div>
             <div className="csf-field">

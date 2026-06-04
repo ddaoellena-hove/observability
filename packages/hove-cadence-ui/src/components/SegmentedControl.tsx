@@ -67,14 +67,23 @@ export const SegmentedControl = React.forwardRef<
     const activeValue = isControlled ? valueProp : internalValue;
 
     // Pill slide animation
+    const containerRef = useRef<HTMLDivElement>(null);
     const segmentRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [pillStyle, setPillStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
 
     useLayoutEffect(() => {
       const activeIdx = options.findIndex((o) => o.value === activeValue);
       const el = segmentRefs.current[activeIdx];
-      if (!el) return;
-      setPillStyle({ left: el.offsetLeft, width: el.offsetWidth });
+      const container = containerRef.current;
+      if (!el || !container) return;
+      // getBoundingClientRect.left points to the outer border edge.
+      // CSS `left` on an absolute element is measured from the PADDING edge (inner border).
+      // We subtract the border width so the pill aligns exactly with the button,
+      // including on the last element where the 1px excess would be clipped.
+      const containerRect = container.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const borderLeft = parseFloat(getComputedStyle(container).borderLeftWidth) || 0;
+      setPillStyle({ left: elRect.left - containerRect.left - borderLeft, width: elRect.width });
     }, [activeValue, options]);
 
     const handleSelect = (val: string) => {
@@ -109,7 +118,11 @@ export const SegmentedControl = React.forwardRef<
 
     return (
       <div
-        ref={ref}
+        ref={(node) => {
+          (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref) ref.current = node;
+        }}
         className={rootClass}
         role="group"
         aria-label={ariaLabel}
