@@ -124,16 +124,14 @@ export default function CreateScenarioForm({ onBack }: Props) {
                 onChange={(e) => setTitre(e.target.value)}
               />
             </div>
-            <div className="csf-field">
-              <label className="csf-label">Date de simulation (requête Navitia)</label>
-              <DatePicker
-                value={dateSimulation}
-                onChange={setDateSimulation}
-                placeholder="jj/mm/aaaa --:--"
-                withTime
-                labelConfirm="Valider"
-              />
-            </div>
+            <DatePicker
+              label="Date de simulation (requête Navitia)"
+              value={dateSimulation}
+              onChange={setDateSimulation}
+              placeholder="jj/mm/aaaa --:--"
+              withTime
+              labelConfirm="Valider"
+            />
           </section>
 
           {/* ── Section 2 ── */}
@@ -193,26 +191,22 @@ export default function CreateScenarioForm({ onBack }: Props) {
           <section className="csf-section">
             <h3 className="csf-section__title">4. Sélectionnez la période d'application</h3>
             <div className="csf-row2">
-              <div className="csf-field">
-                <label className="csf-label">Date et heure de début d'application</label>
-                <DatePicker
-                  value={dateDebut}
-                  onChange={setDateDebut}
-                  placeholder="jj/mm/aaaa --:--"
-                  withTime
-                  labelConfirm="Valider"
-                />
-              </div>
-              <div className="csf-field">
-                <label className="csf-label">Date et heure de fin d'application</label>
-                <DatePicker
-                  value={dateFin}
-                  onChange={setDateFin}
-                  placeholder="jj/mm/aaaa --:--"
-                  withTime
-                  labelConfirm="Valider"
-                />
-              </div>
+              <DatePicker
+                label="Date et heure de début d'application"
+                value={dateDebut}
+                onChange={setDateDebut}
+                placeholder="jj/mm/aaaa --:--"
+                withTime
+                labelConfirm="Valider"
+              />
+              <DatePicker
+                label="Date et heure de fin d'application"
+                value={dateFin}
+                onChange={setDateFin}
+                placeholder="jj/mm/aaaa --:--"
+                withTime
+                labelConfirm="Valider"
+              />
             </div>
           </section>
 
