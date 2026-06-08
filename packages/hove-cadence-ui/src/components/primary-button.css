@@ -691,3 +691,61 @@
 .primary-button.outline-false.disabled .text-wrapper-4 {
   color: #808080;
 }
+
+/* ── Large size ───────────────────────────────────────────────────────────── */
+
+/* Root padding for no-icon and icon-only */
+.primary-button.size-large.no {
+  padding: 12px 32px;
+}
+
+.primary-button.size-large.only {
+  padding: 12px;
+}
+
+/* Vertical padding for left/right icon variants (overrides per-state rules) */
+.primary-button.size-large.left.enabled,
+.primary-button.size-large.left.hover,
+.primary-button.size-large.left.clicked,
+.primary-button.size-large.left.disabled,
+.primary-button.size-large.right.enabled,
+.primary-button.size-large.right.hover,
+.primary-button.size-large.right.clicked,
+.primary-button.size-large.right.disabled {
+  padding: 12px 0;
+}
+
+/* Horizontal padding moved to label span */
+.primary-button.size-large.left .label {
+  padding: 0 28px 0 24px;
+}
+
+.primary-button.size-large.right .label {
+  padding: 0 24px 0 28px;
+}
+
+/* Icon size */
+.primary-button.size-large .icons-instance {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+/* Font size */
+.primary-button.size-large .text-wrapper,
+.primary-button.size-large .text-wrapper-2,
+.primary-button.size-large .text-wrapper-3,
+.primary-button.size-large .text-wrapper-4 {
+  font-size: 15px;
+  letter-spacing: -0.15px;
+  line-height: 18px;
+}
+
+.primary-button.size-large.no .label,
+.primary-button.size-large.clicked.no .label,
+.primary-button.size-large.disabled.no .label,
+.primary-button.size-large.hover.no .label,
+.primary-button.size-large.enabled.no .label {
+  font-size: 15px;
+  letter-spacing: -0.15px;
+  line-height: 18px;
+}

@@ -328,3 +328,46 @@
 .secondary-button.outline-true.disabled.destructive-true .sb-text {
   color: #f6c7c9;
 }
+
+/* ── Large size ───────────────────────────────────────────────────────────── */
+
+.secondary-button.size-large {
+  border-radius: 8px;
+}
+
+/* Label padding */
+.secondary-button.size-large.no .sb-label {
+  padding: 10px 16px;
+}
+
+.secondary-button.size-large.only .sb-label {
+  padding: 10px 16px;
+}
+
+.secondary-button.size-large.left .sb-label {
+  padding: 10px 14px 10px 12px;
+}
+
+.secondary-button.size-large.right .sb-label {
+  padding: 10px 12px 10px 14px;
+}
+
+/* Font size */
+.secondary-button.size-large.no .sb-label,
+.secondary-button.size-large.only .sb-label {
+  font-size: 13px;
+  letter-spacing: -0.13px;
+  line-height: 15.6px;
+}
+
+.secondary-button.size-large .sb-text {
+  font-size: 13px;
+  letter-spacing: -0.13px;
+  line-height: 15.6px;
+}
+
+/* Icon size */
+.secondary-button.size-large .sb-icons-instance {
+  height: 16px !important;
+  width: 16px !important;
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tab, Toggle, PrimaryButton, NavigationDropdown, SegmentedControl } from "hove-cadence-ui";
+import { Tab, Toggle, PrimaryButton, NavigationDropdown, SegmentedControl, TableCard, TableCardAction } from "hove-cadence-ui";
 import CreateScenarioForm from "./CreateScenarioForm";
 import ScenarioDetail from "./ScenarioDetail";
 import "./ScenariosMobilite.css";
@@ -28,6 +28,61 @@ const InsightsMulticritereIcon = () => (
     <path fillRule="evenodd" clipRule="evenodd" d="M15.8398 1.7998C16.6185 1.7998 17.2498 2.43083 17.2498 3.20922V6.45678C18.8927 7.03725 20.0698 8.60317 20.0698 10.4441C20.0698 12.285 18.8927 13.8509 17.2498 14.4314V18.7198H14.4298V14.4314C12.7869 13.8509 11.6098 12.285 11.6098 10.4441C11.6098 8.60317 12.7869 7.03725 14.4298 6.45678V3.20922C14.4298 2.43083 15.0611 1.79981 15.8398 1.7998ZM15.8398 9.00367C15.044 9.00367 14.3988 9.64862 14.3987 10.4441C14.3987 11.2396 15.044 11.8846 15.8398 11.8846C16.6356 11.8846 17.2809 11.2396 17.2809 10.4441C17.2809 9.64862 16.6356 9.00367 15.8398 9.00367Z" fill="#BFC9CB"/>
   </svg>
 );
+
+/* ── Helpers cellules (calqués sur les stories TableCard) ── */
+
+const DateCell = ({ date, time }: { date: string; time: string }) => (
+  <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+    <span style={{ fontFamily: "Inter, Helvetica", fontSize: 13, fontWeight: 500, color: "#002830" }}>
+      {date}
+    </span>
+    <span style={{ fontFamily: "Inter, Helvetica", fontSize: 12, color: "#809397" }}>
+      {time}
+    </span>
+  </div>
+);
+
+const InfoCard = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div style={{ background: "#ECECEC", border: "1px solid #E5E5E5", borderRadius: 10, overflow: "hidden" }}>
+    <div style={{ padding: "6px 12px" }}>
+      <span style={{ fontFamily: "Inter, Helvetica", fontSize: 11, fontWeight: 600, color: "#737373", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+        {label}
+      </span>
+    </div>
+    <div style={{ borderRadius: "10px 10px 0 0", background: "#F7F7F7", boxShadow: "0 0 2px 0 rgba(0,0,0,0.25)", padding: "10px 12px" }}>
+      {children}
+    </div>
+  </div>
+);
+
+/* ── Données ── */
+
+const SCENARIOS = [
+  {
+    id: "1",
+    maj:   { date: "04/06/2026", time: "09h15" },
+    debut: { date: "06/06/2026", time: "06h00" },
+    fin:   { date: "30/06/2026", time: "22h00" },
+    info:  "Scénario de mobilité 1 — Fermeture Ligne 13",
+  },
+  {
+    id: "2",
+    maj:   { date: "02/06/2026", time: "14h30" },
+    debut: { date: "10/06/2026", time: "08h00" },
+    fin:   { date: "20/06/2026", time: "20h00" },
+    info:  "Scénario de mobilité 2 — Travaux RER A Nation",
+  },
+  {
+    id: "3",
+    maj:   { date: "01/06/2026", time: "11h00" },
+    debut: { date: "15/06/2026", time: "07h00" },
+    fin:   { date: "15/07/2026", time: "23h00" },
+    info:  "Scénario de mobilité 3 — Déviation Bus 91",
+  },
+];
+
+/* Largeurs colonnes alignées header ↔ rows */
+const COL = { maj: 120, debut: 120, fin: 120, actions: 116 };
 
 export default function ScenariosMobilite() {
   const [activeTab, setActiveTab] = useState<TabId>("en-cours");
@@ -76,6 +131,7 @@ export default function ScenariosMobilite() {
 
       {/* ── Content card ── */}
       <div className="sm-card">
+        {/* Tabs + actions */}
         <div className="sm-card__header">
           <nav className="sm-tabs" role="tablist">
             {TABS.map((tab) => (
@@ -109,26 +165,70 @@ export default function ScenariosMobilite() {
           </div>
         </div>
 
-        <table className="sm-table">
-          <thead>
-            <tr>
-              <th>MISE À JOUR</th>
-              <th>DÉBUT</th>
-              <th>FIN</th>
-              <th>INFORMATIONS</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="sm-table__row" onClick={() => setShowDetail(true)} style={{ cursor: "pointer" }}>
-              <td>04/06/2026</td>
-              <td>06/06/2026</td>
-              <td>30/06/2026</td>
-              <td>Scénario de mobilité 1</td>
-              <td>→</td>
-            </tr>
-          </tbody>
-        </table>
+        {/* ── En-tête colonnes ── */}
+        <div className="sm-col-header">
+          <div className="sm-col-header__cell" style={{ width: COL.maj }}>MISE À JOUR</div>
+          <div className="sm-col-header__cell" style={{ width: COL.debut }}>DÉBUT</div>
+          <div className="sm-col-header__cell" style={{ width: COL.fin }}>FIN</div>
+          <div className="sm-col-header__cell sm-col-header__cell--flex">INFORMATIONS</div>
+          <div className="sm-col-header__cell" style={{ width: COL.actions }}>ACTIONS</div>
+        </div>
+
+        {/* ── Lignes TableCard — Content Only ── */}
+        <div className="sm-rows">
+          {SCENARIOS.map((row) => (
+            <div
+              key={row.id}
+              className="sm-row-wrap"
+              onClick={() => setShowDetail(true)}
+            >
+              <TableCard
+                columns={[
+                  {
+                    key: "maj",
+                    content: <DateCell date={row.maj.date} time={row.maj.time} />,
+                    width: COL.maj,
+                  },
+                  {
+                    key: "debut",
+                    content: <DateCell date={row.debut.date} time={row.debut.time} />,
+                    width: COL.debut,
+                  },
+                  {
+                    key: "fin",
+                    content: <DateCell date={row.fin.date} time={row.fin.time} />,
+                    width: COL.fin,
+                  },
+                  {
+                    key: "info",
+                    flex: 1,
+                    content: (
+                      <InfoCard label="Informations">
+                        <span style={{ fontFamily: "Inter, Helvetica", fontSize: 13, color: "#002830" }}>
+                          {row.info}
+                        </span>
+                      </InfoCard>
+                    ),
+                  },
+                  {
+                    key: "actions",
+                    content: (
+                      <div
+                        style={{ display: "flex", alignItems: "center", gap: 4 }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <TableCardAction icon="edit-02" label="Modifier" />
+                        <TableCardAction icon="copy-01" label="Dupliquer" />
+                        <TableCardAction icon="trash" label="Supprimer" destructive />
+                      </div>
+                    ),
+                    width: COL.actions,
+                  },
+                ]}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

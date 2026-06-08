@@ -93,20 +93,20 @@
   outline: none;
   font-size: 16px;
   font-weight: 500;
-  color: #9ca3af;
+  color: #002830;
   font-family: "Spline Sans Mono", monospace;
   line-height: 1;
   cursor: text;
   /* Masquer les flèches natives du navigateur */
   -moz-appearance: textfield;
 }
+.counter-input__input::placeholder {
+  color: #9ca3af;
+}
 .counter-input__input::-webkit-outer-spin-button,
 .counter-input__input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-.counter-input__input:focus {
-  color: #002830;
 }
 .counter-input__input:disabled {
   cursor: not-allowed;
