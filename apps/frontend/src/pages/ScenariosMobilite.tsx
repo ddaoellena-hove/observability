@@ -1,7 +1,11 @@
-import { useState } from "react";
-import { Tab, Toggle, PrimaryButton, NavigationDropdown, SegmentedControl, TableCard, TableCardAction } from "hove-cadence-ui";
+import { useState, useEffect } from "react";
+import { Tab, Toggle, PrimaryButton, NavigationDropdown, SegmentedControl, TableCard, TableCardAction, AlertToast } from "hove-cadence-ui";
 import CreateScenarioForm from "./CreateScenarioForm";
 import ScenarioDetail from "./ScenarioDetail";
+import MapScenarioPanel from "../components/MapScenarioPanel";
+import ScenarioInfoCard, { type ScenarioInfoData } from "../components/ScenarioInfoCard";
+import ShapeModal from "../components/ShapeModal";
+import { type MapZone } from "../components/Map";
 import "./ScenariosMobilite.css";
 
 type TabId = "en-cours" | "a-venir" | "passees" | "brouillon";
@@ -57,47 +61,152 @@ const InfoCard = ({ label, children }: { label: string; children: React.ReactNod
 
 /* ── Données ── */
 
-const SCENARIOS = [
+const SCENARIOS: { id: string; maj: { date: string; time: string }; debut: { date: string; time: string }; fin: { date: string; time: string }; info: ScenarioInfoData; zones?: MapZone[] }[] = [
   {
     id: "1",
     maj:   { date: "04/06/2026", time: "09h15" },
     debut: { date: "06/06/2026", time: "06h00" },
     fin:   { date: "30/06/2026", time: "22h00" },
-    info:  "Scénario de mobilité 1 — Fermeture Ligne 13",
+    zones: [{ coordinates: [[48.8935,2.328],[48.8945,2.339],[48.892,2.348],[48.8878,2.351],[48.8845,2.3455],[48.8855,2.332],[48.889,2.3265]], color: "#3b82f6", label: "Scénario n°1" }],
+    info: {
+      title: "Scénario de mobilité n°1",
+      poi: { icon: "hospital", name: "Hôpital Bretonneau (Paris)", address: "62 Rue Joseph de Maistre (Paris)" },
+      hasShape: true,
+      params: {
+        exclure: { name: "Gare du Nord", city: "Paris", modes: ["bus", "metro", "rer"] },
+        forcer:  { name: "Abbesses",     city: "Paris", modes: ["bus", "metro"] },
+        dureeMax: 1200, nbMin: 4, nbMax: 12,
+      },
+    },
   },
   {
     id: "2",
     maj:   { date: "02/06/2026", time: "14h30" },
     debut: { date: "10/06/2026", time: "08h00" },
     fin:   { date: "20/06/2026", time: "20h00" },
-    info:  "Scénario de mobilité 2 — Travaux RER A Nation",
+    zones: [{ coordinates: [[48.87,2.338],[48.8715,2.352],[48.866,2.356],[48.8625,2.353],[48.8628,2.339],[48.866,2.334]], color: "#3b82f6", label: "Scénario n°2" }],
+    info: {
+      title: "Scénario de mobilité n°2",
+      poi: { icon: "station", name: "Gare de Lyon (Paris)", address: "Place Louis Armand (Paris)" },
+      hasShape: true,
+      params: {
+        exclure: { name: "Nation",       city: "Paris", modes: ["bus", "metro", "rer", "tram"] },
+        forcer:  { name: "Gare de Lyon", city: "Paris", modes: ["rer", "train"] },
+        dureeMax: 900, nbMin: 3, nbMax: 10,
+      },
+    },
   },
   {
     id: "3",
     maj:   { date: "01/06/2026", time: "11h00" },
     debut: { date: "15/06/2026", time: "07h00" },
     fin:   { date: "15/07/2026", time: "23h00" },
-    info:  "Scénario de mobilité 3 — Déviation Bus 91",
+    zones: [],
+    info: {
+      title: "Scénario de mobilité n°3",
+      poi: { icon: "landmark", name: "Grands Boulevards (Paris)", address: "Boulevard des Italiens (Paris)" },
+      hasShape: false,
+      params: {
+        exclure: { name: "Richelieu–Drouot", city: "Paris", modes: ["metro"] },
+        forcer:  { name: "Bonne Nouvelle",   city: "Paris", modes: ["bus", "metro"] },
+        dureeMax: 1800, nbMin: 1, nbMax: 99999,
+      },
+    },
   },
 ];
 
+const SortIcon = () => (
+  <span className="sm-col-header__sort" aria-hidden="true">
+    <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+      <path d="M4 0.5L7.5 4.5H0.5L4 0.5Z" fill="#69797D"/>
+    </svg>
+    <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+      <path d="M4 4.5L0.5 0.5H7.5L4 4.5Z" fill="#69797D"/>
+    </svg>
+  </span>
+);
+
 /* Largeurs colonnes alignées header ↔ rows */
-const COL = { maj: 120, debut: 120, fin: 120, actions: 116 };
+const COL = { maj: 155, debut: 155, fin: 155 };
 
 export default function ScenariosMobilite() {
   const [activeTab, setActiveTab] = useState<TabId>("en-cours");
   const [mapView, setMapView] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [shapeModal, setShapeModal] = useState<{ zones: MapZone[]; title: string } | null>(null);
+
+  const toggleSelected = (id: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
   const [activeSection, setActiveSection] = useState("multicritere");
   const [activeView, setActiveView] = useState("scenarios");
+  const [toastMounted, setToastMounted] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastProgress, setToastProgress] = useState(0);
 
-  if (showForm) return <CreateScenarioForm onBack={() => setShowForm(false)} />;
-  if (showDetail) return <ScenarioDetail onBack={() => setShowDetail(false)} />;
+  // Dismiss: animate out then unmount
+  const dismissToast = () => {
+    setToastVisible(false);
+    setTimeout(() => setToastMounted(false), 380);
+  };
+
+  // Show: mount first, then trigger enter transition on next frame
+  const showToast = () => {
+    setToastMounted(true);
+    setToastProgress(0);
+    // rAF ensures the element is in the DOM before we flip is-visible
+    requestAnimationFrame(() => requestAnimationFrame(() => setToastVisible(true)));
+  };
+
+  // Progress animation + auto-dismiss
+  useEffect(() => {
+    if (!toastVisible) return;
+    const start = performance.now();
+    const duration = 3000;
+    let rafId: number;
+    const tick = (now: number) => {
+      const pct = Math.min(100, ((now - start) / duration) * 100);
+      setToastProgress(Math.round(pct));
+      if (pct < 100) rafId = requestAnimationFrame(tick);
+      else dismissToast();
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [toastVisible]);
+
+  const handleSuccess = () => {
+    setShowForm(false);
+    showToast();
+  };
+
+  if (showForm) return <CreateScenarioForm onBack={() => setShowForm(false)} onSuccess={handleSuccess} />;
 
   return (
     <div className="sm-page">
+      {shapeModal && (
+        <ShapeModal
+          zones={shapeModal.zones}
+          title={shapeModal.title}
+          onClose={() => setShapeModal(null)}
+        />
+      )}
+      {toastMounted && (
+        <div className={`sm-toast-wrap${toastVisible ? " is-visible" : ""}`}>
+          <AlertToast
+            type="success"
+            title="Scénario créé"
+            description="Le scénario de mobilité a bien été créé et sera bientôt actif."
+            progress={toastProgress}
+            dismissible
+            onDismiss={dismissToast}
+          />
+        </div>
+      )}
       {/* ── Header ── */}
       <div className="sm-header">
         <div className="sm-header__left">
@@ -145,7 +254,7 @@ export default function ScenariosMobilite() {
           </nav>
           <div className="sm-card__actions">
             <label className="sm-toggle-label">
-              <span>Affichage cartographique</span>
+              <span style={{ fontWeight: 500 }}>Affichage cartographique</span>
               <div
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
@@ -165,70 +274,92 @@ export default function ScenariosMobilite() {
           </div>
         </div>
 
-        {/* ── En-tête colonnes ── */}
-        <div className="sm-col-header">
-          <div className="sm-col-header__cell" style={{ width: COL.maj }}>MISE À JOUR</div>
-          <div className="sm-col-header__cell" style={{ width: COL.debut }}>DÉBUT</div>
-          <div className="sm-col-header__cell" style={{ width: COL.fin }}>FIN</div>
-          <div className="sm-col-header__cell sm-col-header__cell--flex">INFORMATIONS</div>
-          <div className="sm-col-header__cell" style={{ width: COL.actions }}>ACTIONS</div>
-        </div>
+        {/* ── Vue cartographique ── */}
+        {mapView && (
+          <div className="sm-map-view">
+            <MapScenarioPanel />
+          </div>
+        )}
 
-        {/* ── Lignes TableCard — Content Only ── */}
-        <div className="sm-rows">
-          {SCENARIOS.map((row) => (
-            <div
-              key={row.id}
-              className="sm-row-wrap"
-              onClick={() => setShowDetail(true)}
-            >
-              <TableCard
-                columns={[
-                  {
-                    key: "maj",
-                    content: <DateCell date={row.maj.date} time={row.maj.time} />,
-                    width: COL.maj,
-                  },
-                  {
-                    key: "debut",
-                    content: <DateCell date={row.debut.date} time={row.debut.time} />,
-                    width: COL.debut,
-                  },
-                  {
-                    key: "fin",
-                    content: <DateCell date={row.fin.date} time={row.fin.time} />,
-                    width: COL.fin,
-                  },
-                  {
-                    key: "info",
-                    flex: 1,
-                    content: (
-                      <InfoCard label="Informations">
-                        <span style={{ fontFamily: "Inter, Helvetica", fontSize: 13, color: "#002830" }}>
-                          {row.info}
-                        </span>
-                      </InfoCard>
-                    ),
-                  },
-                  {
-                    key: "actions",
-                    content: (
+        {/* ── Vue tableau ── */}
+        {!mapView && (
+          <>
+            <div className="sm-col-header">
+              <div className="sm-col-header__cell" style={{ width: COL.maj }}>
+                MISE À JOUR
+                <SortIcon />
+              </div>
+              <div className="sm-col-header__cell" style={{ width: COL.debut }}>
+                DÉBUT
+                <SortIcon />
+              </div>
+              <div className="sm-col-header__cell" style={{ width: COL.fin }}>
+                FIN
+                <SortIcon />
+              </div>
+              <div className="sm-col-header__cell sm-col-header__cell--flex">INFORMATIONS</div>
+            </div>
+
+            <div className="sm-rows">
+              {SCENARIOS.map((row) => (
+                <div
+                  key={row.id}
+                  className="sm-row-wrap"
+                  onClick={() => toggleSelected(row.id)}
+                >
+                  <TableCard
+                    title={row.info.title}
+                    state={selected.has(row.id) ? "selected" : "default"}
+                    checkboxState={selected.has(row.id) ? "checked" : "unchecked"}
+                    onCheckboxChange={() => toggleSelected(row.id)}
+                    actions={
                       <div
                         style={{ display: "flex", alignItems: "center", gap: 4 }}
                         onClick={(e) => e.stopPropagation()}
                       >
+                        <TableCardAction icon="eye" label="Consulter" />
                         <TableCardAction icon="edit-02" label="Modifier" />
                         <TableCardAction icon="copy-01" label="Dupliquer" />
                         <TableCardAction icon="trash" label="Supprimer" destructive />
                       </div>
-                    ),
-                    width: COL.actions,
-                  },
-                ]}
-              />
+                    }
+                    columns={[
+                      {
+                        key: "maj",
+                        content: <DateCell date={row.maj.date} time={row.maj.time} />,
+                        width: COL.maj,
+                      },
+                      {
+                        key: "debut",
+                        content: <DateCell date={row.debut.date} time={row.debut.time} />,
+                        width: COL.debut,
+                      },
+                      {
+                        key: "fin",
+                        content: <DateCell date={row.fin.date} time={row.fin.time} />,
+                        width: COL.fin,
+                      },
+                      {
+                        key: "info",
+                        flex: 1,
+                        content: (
+                          <div style={{ width: "100%" }}>
+                            <ScenarioInfoCard
+                              data={row.info}
+                              onShowMap={row.zones && row.zones.length > 0
+                                ? () => setShapeModal({ zones: row.zones!, title: row.info.title })
+                                : undefined}
+                            />
+                          </div>
+                        ),
+                      },
+                    ]}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

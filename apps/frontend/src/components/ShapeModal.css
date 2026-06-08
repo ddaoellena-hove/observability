@@ -1,0 +1,91 @@
+/* ── Overlay ─────────────────────────────────────────────────────────────── */
+
+.shape-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  backdrop-filter: blur(2px);
+}
+
+/* ── Modal ───────────────────────────────────────────────────────────────── */
+
+.shape-modal {
+  width: 100%;
+  max-width: 1140px;
+  height: 80vh;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.shape-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  height: 40px;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.shape-modal__header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shape-modal__title {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #002830;
+  text-transform: uppercase;
+}
+
+.shape-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #69797d;
+  transition: background 0.12s, color 0.12s;
+}
+
+.shape-modal__close:hover {
+  background: #f0f0f0;
+  color: #002830;
+}
+
+/* ── Map ─────────────────────────────────────────────────────────────────── */
+
+.shape-modal__map {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.shape-modal__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}

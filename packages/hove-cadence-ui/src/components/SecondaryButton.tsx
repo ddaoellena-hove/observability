@@ -31,6 +31,9 @@ export interface SecondaryButtonProps {
   /** Button size. Defaults to "medium". */
   size?: "medium" | "large";
 
+  /** Optional URL to override the icon image (passed to Icons iconMap). */
+  iconMap?: string;
+
   /** Optional extra class name for custom styling. */
   className?: string;
 
@@ -57,6 +60,7 @@ export const SecondaryButton = React.forwardRef<
       destructive = false,
       label = "Label",
       icon = "map-01",
+      iconMap,
       size = "medium",
       className,
       onClick,
@@ -104,7 +108,7 @@ export const SecondaryButton = React.forwardRef<
       .join(" ");
 
     const iconEl = (
-      <Icons className="sb-icons-instance" icon={icon} iconMap="https://c.animaapp.com/moieyt2ccA1Ry9/img/icon-map-01-1_1.svg" />
+      <Icons className="sb-icons-instance" icon={icon} iconMap={iconMap ?? "https://c.animaapp.com/moieyt2ccA1Ry9/img/icon-map-01-1_1.svg"} />
     );
 
     let content: React.ReactNode;

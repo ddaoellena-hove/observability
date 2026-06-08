@@ -58,8 +58,8 @@
   font-family: "Inter", Helvetica;
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0;
-  line-height: normal;
+  letter-spacing: normal;
+  line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -131,12 +131,14 @@
   border-radius: 8px;
   display: flex;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* ── Columns ─────────────────────────────────────────────────────────────── */
 .table-card__column {
+  align-items: center;
   border-right: 1px solid #f0f0f0;
+  display: flex;
   flex-shrink: 0;
   min-width: 0;
   padding: 16px;

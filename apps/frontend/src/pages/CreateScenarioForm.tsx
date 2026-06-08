@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   TextInput,
+  TextArea,
   DatePicker,
   SecondaryButton,
   PrimaryButton,
@@ -32,9 +33,10 @@ const InsightsMulticritereIcon = () => (
 
 interface Props {
   onBack: () => void;
+  onSuccess: () => void;
 }
 
-export default function CreateScenarioForm({ onBack }: Props) {
+export default function CreateScenarioForm({ onBack, onSuccess }: Props) {
   const [titre, setTitre] = useState("");
   const [dateSimulation, setDateSimulation] = useState<Date | null>(null);
   const [exclureObjet, setExclureObjet] = useState("stop_area:IDFM:482835");
@@ -56,6 +58,7 @@ export default function CreateScenarioForm({ onBack }: Props) {
   const [status, setStatus] = useState("Prêt.");
   const [activeSection, setActiveSection] = useState("multicritere");
   const [activeView, setActiveView] = useState("scenarios");
+  const [resetKey, setResetKey] = useState(0);
 
   return (
     <div className="csf-wrapper">
@@ -146,6 +149,7 @@ export default function CreateScenarioForm({ onBack }: Props) {
               withIcon="no"
               outline
               destructive
+              onClick={() => setResetKey((k) => k + 1)}
             />
           </section>
 
@@ -153,18 +157,16 @@ export default function CreateScenarioForm({ onBack }: Props) {
           <section className="csf-section">
             <h3 className="csf-section__title">3. Attribuez des paramètres à la zone impactée</h3>
             <div className="csf-field">
-              <label className="csf-label">Exclure un objet</label>
-              <textarea
-                className="csf-textarea"
+              <TextArea
+                label="Exclure un objet"
                 value={exclureObjet}
                 onChange={(e) => setExclureObjet(e.target.value)}
                 rows={3}
               />
             </div>
             <div className="csf-field">
-              <label className="csf-label">Forcer l'usage d'un objet</label>
-              <textarea
-                className="csf-textarea"
+              <TextArea
+                label="Forcer l'usage d'un objet"
                 value={forcerObjet}
                 onChange={(e) => setForcerObjet(e.target.value)}
                 rows={3}
@@ -296,9 +298,8 @@ export default function CreateScenarioForm({ onBack }: Props) {
               <CounterInput label="Concurrence requêtes" value={concurrence} onChange={setConcurrence} min={1} max={32} step={1} />
             </div>
             <div className="csf-field">
-              <label className="csf-label">Paramètres avancés (JSON, optionnel)</label>
-              <textarea
-                className="csf-textarea"
+              <TextArea
+                label="Paramètres avancés (JSON, optionnel)"
                 value={paramsAvances}
                 onChange={(e) => setParamsAvances(e.target.value)}
                 rows={4}
@@ -317,6 +318,7 @@ export default function CreateScenarioForm({ onBack }: Props) {
               label="Suivant"
               state="enabled"
               withIcon="no"
+              onClick={onSuccess}
             />
           </div>
           <p className="csf-status">{status}</p>
@@ -334,7 +336,11 @@ export default function CreateScenarioForm({ onBack }: Props) {
               La carte à droite vous permet de tracer le shape puis de visualiser le périmètre OD.
             </p>
           </div>
-          <Map className="csf-map__canvas" />
+          <Map
+            className="csf-map__canvas"
+            drawMode
+            resetKey={resetKey}
+          />
         </div>
       </div>
       </div>

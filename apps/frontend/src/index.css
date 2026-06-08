@@ -80,9 +80,10 @@ body {
 .card__label {
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.3;
   color: #888;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   margin-bottom: 8px;
 }
 
@@ -90,4 +91,22 @@ body {
   font-size: 28px;
   font-weight: 700;
   color: #1a1a2e;
+}
+
+/* ── Leaflet zone tooltip ── */
+.map-zone-tooltip {
+  background: #002830;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.map-zone-tooltip::before {
+  border-top-color: #002830;
 }
