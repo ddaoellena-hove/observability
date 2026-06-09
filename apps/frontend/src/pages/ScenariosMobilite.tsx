@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Tab, Toggle, PrimaryButton, NavigationDropdown, SegmentedControl, TableCard, TableCardAction, AlertToast } from "hove-cadence-ui";
+import { Tab, Toggle, PrimaryButton, SecondaryButton, NavigationDropdown, SegmentedControl, TableCard, TableCardAction, AlertToast } from "hove-cadence-ui";
 import CreateScenarioForm from "./CreateScenarioForm";
 import ScenarioDetail from "./ScenarioDetail";
 import MapScenarioPanel from "../components/MapScenarioPanel";
@@ -270,6 +270,30 @@ export default function ScenariosMobilite() {
               state="enabled"
               withIcon="no"
               onClick={() => setShowForm(true)}
+            />
+          </div>
+        </div>
+
+        {/* ── Fichier OD ── */}
+        <div className="sm-od-section">
+          <p className="sm-od-card__section-label">Fichier OD et analyse</p>
+          <div className="sm-od-card">
+            <div className="sm-od-card__left">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <circle cx="14" cy="14" r="12" stroke="#c4cdd0" strokeWidth="2" strokeDasharray="4 3" strokeLinecap="round"/>
+                <circle cx="14" cy="14" r="5" stroke="#c4cdd0" strokeWidth="1.5"/>
+              </svg>
+              <div className="sm-od-card__text">
+                <span className="sm-od-card__label">Aucun fichier OD chargé</span>
+                <span className="sm-od-card__sub">Pour activer l'analyse d'impact, configurez d'abord un fichier OD.</span>
+              </div>
+            </div>
+            <SecondaryButton
+              label="Configurer"
+              state="enabled"
+              size="medium"
+              withIcon="left"
+              icon="settings-01"
             />
           </div>
         </div>

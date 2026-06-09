@@ -121,6 +121,56 @@
   background: #ffe4e4;
 }
 
+/* ── Fichier OD ── */
+
+.sm-od-section {
+  background: #FAFAFA;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sm-od-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.sm-od-card__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sm-od-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sm-od-card__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #002830;
+  line-height: 1.2;
+}
+
+.sm-od-card__sub {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+.sm-od-card__section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #69797d;
+  margin: 0 0 8px;
+}
+
+
 /* ── Card ── */
 .sm-card {
   background: #fff;
